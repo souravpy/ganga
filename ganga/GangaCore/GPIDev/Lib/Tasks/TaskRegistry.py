@@ -21,6 +21,10 @@ str_hold = markup("hold", overview_colours["hold"])
 str_bad = markup("bad", overview_colours["bad"])
 
 
+from GangaCore.Utility.Profiling import cpu_profiler, mem_profiler, call_counter
+@call_counter
+@cpu_profiler
+@mem_profiler
 class TaskRegistry(Registry):
 
     def __init__(self, name, doc):

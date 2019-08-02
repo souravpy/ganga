@@ -28,6 +28,10 @@ from GangaCore.Utility.Config import getConfig
 
 logger = GangaCore.Utility.logging.getLogger()
 
+from GangaCore.Utility.Profiling import cpu_profiler, mem_profiler, call_counter
+@call_counter
+@cpu_profiler
+@mem_profiler
 class IBackend(GangaObject):
 
     """

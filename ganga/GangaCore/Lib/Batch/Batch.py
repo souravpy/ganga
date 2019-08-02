@@ -51,6 +51,10 @@ def shell_cmd(cmd, soutfile=None, allowed_exit=[0]):
     return rc, soutfile, m is None
 
 
+from GangaCore.Utility.Profiling import cpu_profiler, mem_profiler, call_counter
+@call_counter
+@cpu_profiler
+@mem_profiler
 class Batch(IBackend):
 
     """ Batch submission backend.

@@ -25,6 +25,10 @@ def addInfoString( task_obj, info_str ):
     
     task_obj.info.append("%s: %s" % (time.ctime(), info_str) )
 
+from GangaCore.Utility.Profiling import cpu_profiler, mem_profiler, call_counter
+@call_counter
+@cpu_profiler
+@mem_profiler
 class ITask(GangaObject):
 
     """This is the framework of a task without special properties"""

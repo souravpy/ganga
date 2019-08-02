@@ -21,6 +21,10 @@ def formatTraceback():
    "Helper function to printout a traceback as a string"
    return "\n %s\n%s\n%s\n" % (''.join( traceback.format_tb(sys.exc_info()[2])), sys.exc_info()[0], sys.exc_info()[1])
 
+from GangaCore.Utility.Profiling import cpu_profiler, mem_profiler, call_counter
+@call_counter
+@cpu_profiler
+@mem_profiler
 class IUnit(GangaObject):
     _schema = Schema(Version(1, 0), {
         'status': SimpleItem(defvalue='new', protected=1, doc='Status - running, pause or completed', typelist=[str]),

@@ -34,10 +34,10 @@ mpath = _makedir(os.path.join(path, 'memory_profiles/'))
 ccpath = _makedir(os.path.join(path, 'call_counters/'))
 
 
-def cpu_profile(func):
+def cpu_profile(cls, func):
     def wrapper(*args, **kwargs):
         # every function will have its different profile
-        datafn = cpath + func.__name__ + timestr + ".profile"
+        datafn = cpath + cls.__name__ + "-" + func.__name__ + timestr + ".profile"
 
         # profiling the function by passing in the function and arguments
         prof = cProfile.Profile()
@@ -56,7 +56,12 @@ def cpu_profiler(cls, profile_cpu=c['Profile_CPU']):
         for key, value in vars(cls).iteritems():
             if callable(value):
                 # adding cpu_profile decorator to every function of class
-                setattr(cls, key, cpu_profile(value))
+                setattr(cls, key, cpu_profile(cls, value))
+            elif type(value) is staticmethod:
+                inner_func = value.__func__
+                method_type = type(value)
+                decorated = method_type(cpu_profile(cls, inner_func))
+                setattr(cls, key, decorated)
     return cls
 
 

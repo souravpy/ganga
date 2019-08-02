@@ -25,6 +25,10 @@ from GangaCore.GPIDev.Base.Proxy import getName, stripProxy
 logger = GangaCore.Utility.logging.getLogger()
 config = GangaCore.Utility.Config.getConfig('Local')
 
+from GangaCore.Utility.Profiling import cpu_profiler, mem_profiler, call_counter
+@call_counter
+@cpu_profiler
+@mem_profiler
 class Localhost(IBackend):
 
     """Run jobs in the background on local host.

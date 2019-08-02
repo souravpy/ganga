@@ -2,6 +2,7 @@ from __future__ import absolute_import
 from threading import Thread, RLock
 from .GangaThreadPool import GangaThreadPool
 from GangaCore.Utility.logging import getLogger
+from GangaCore.Utility.Profiling import cpu_profiler, mem_profiler, call_counter
 import functools
 logger = getLogger()
 
@@ -13,6 +14,9 @@ def synchronised(f):
     return decorated
 
 
+@call_counter
+@cpu_profiler
+@mem_profiler
 class GangaThread(Thread):
 
     __slots__ = ('__should_stop_flag', '__critical', '_lock', 'gangaName')

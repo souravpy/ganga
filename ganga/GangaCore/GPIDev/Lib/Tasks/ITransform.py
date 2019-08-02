@@ -19,6 +19,10 @@ from GangaCore.GPIDev.Lib.File.File import File
 
 logger = getLogger()
 
+from GangaCore.Utility.Profiling import cpu_profiler, mem_profiler, call_counter
+@call_counter
+@cpu_profiler
+@mem_profiler
 class ITransform(GangaObject):
     _schema = Schema(Version(1, 0), {
         'status': SimpleItem(defvalue='new', protected=1, copyable=1, doc='Status - running, pause or completed', typelist=[str]),
