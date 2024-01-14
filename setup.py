@@ -73,26 +73,17 @@ class RunTestsCommand(Command):
 
 pythonPackages = find_packages('./')
 pythonPackages.append('ganga/GangaRelease')
-pythonPackages.append('ganga/GangaGUI')
 
 
 install_requires = [
     'ipython>=5.0.0',
-    'jedi>=0.17.2',
-    'httplib2>=0.8',
+    'aiofile>=3.7.4',
+    'aiohttp>=3.8.4',
     'absl-py>=0.1.2',
     'google-api-python-client',
     'google-auth-httplib2',
     'google-auth-oauthlib',
     'requests>=2.23.0',
-    'Flask>=1.1.2',
-    'PyJWT~=2.4.0',
-    'Flask-SQLAlchemy>=2.4.3',
-    'gunicorn>=20.0.4',
-    'Flask-Login>=0.5.0',
-    'Flask-SocketIO==4.3.1',
-    'Werkzeug==2.0.3',
-    'SQLAlchemy==1.3.19',
     "docker",
     "pymongo",
     "gdown",
@@ -111,12 +102,10 @@ setup(
     author_email='project-ganga-developers@cern.ch',
     license='GPL v2',
     scripts=[
-        'bin/ganga',
-        'bin/ganga-gui'],
+        'bin/ganga'],
     package_dir={
         'ganga': 'ganga',
-        'GangaRelease': 'ganga/GangaRelease',
-        'GangaGUI': 'ganga/GangaGUI'},
+        'GangaRelease': 'ganga/GangaRelease'},
     packages=pythonPackages,
     install_requires=install_requires,
     extras_require={
@@ -127,7 +116,9 @@ setup(
             'pytest-pylint',
             'pytest-mock'],
         'profiler': ['memory_profiler'],
-        'LHCb': ['LbDevTools']},
+        'LHCb': ['LbDevTools'],
+        'Dirac': ['UltraDict',
+                  'psutil']},
     classifiers=[
         'License :: OSI Approved :: GNU General Public License v2 (GPLv2)',
         'Programming Language :: Python :: 3.8',
@@ -141,11 +132,7 @@ setup(
             'ReleaseNotes-*',
             'tools/check-new-ganga.py',
             'tools/ganga-cvmfs-install.sh',
-            'tools/ganga-cvmfs-install-dev.sh'],
-        'GangaGUI': [
-            'gui/templates/*.html',
-            'gui/static/css/main.css',
-            'gui/static/js/*.js']},
+            'tools/ganga-cvmfs-install-dev.sh']},
     cmdclass={
         'tests': RunTestsCommand,
     },
