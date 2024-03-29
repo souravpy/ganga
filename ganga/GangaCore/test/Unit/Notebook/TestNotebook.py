@@ -1,5 +1,3 @@
-
-
 try:
     import unittest2 as unittest
 except ImportError:
@@ -11,8 +9,6 @@ import uuid
 import os.path
 
 from GangaCore.GPIDev.Base.Proxy import addProxy, getProxyClass, getProxyAttr, isProxy, isType, stripProxy
-
-from GangaCore.Lib.Notebook import Notebook
 
 from GangaCore.Utility.logging import getLogger
 logger = getLogger(modulename=True)
