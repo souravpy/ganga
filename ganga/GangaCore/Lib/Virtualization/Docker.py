@@ -36,7 +36,7 @@ class Docker(IVirtualization):
     _schema = IVirtualization._schema.inherit_copy()
     _schema.datadict['mode'] = SimpleItem(defvalue="P1", doc='Mode of container execution')
 
-    def __init__(self, image, mode):
+    def __init__(self, image='', mode='P1'):
         super().__init__(image)
         self.mode = mode
 
