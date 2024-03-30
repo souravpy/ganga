@@ -1,13 +1,14 @@
 from GangaCore.testlib.GangaUnitTest import GangaUnitTest
 from GangaCore.Lib.Virtualization import Docker
-from GangaTest.Framework.utils import sleep_until_completed, file_contains
+from GangaTest.Framework.utils import sleep_until_completed
+
 
 class TestDocker(GangaUnitTest):
     def test_DockerNoImageArg(self):
         """
-        The test_DockerNoImageArg function tests that Ganga can 
+        The test_DockerNoImageArg function tests that Ganga can
         submit a virtualization job using the default Docker image.
-        
+
         This test will fail if Ganga cannot find the job in the registry or
         it cannot intialize the container with the default Docker image.
         """
@@ -21,12 +22,12 @@ passed correctly as an argument.")
         j.submit()
         sleep_until_completed(j)
         j.remove()
-        
+
     def test_DockerBareImageArg(self):
         """
         The test_DockerBareImageArg function tests that the Docker image
         is passed correctly as an argument without the 'image=' prefix.
-        
+
         This test will fail if Ganga cannot find the job in the registry or
         it cannot intialize the container with the desired Docker image.
         """
@@ -45,7 +46,7 @@ image was not passed correctly as an argument.")
         """
         The DockerImageArg function tests that the Docker image
         is passed correctly as an argument with the 'image=' prefix.
-        
+
         This test will fail if Ganga cannot find the job in the registry or
         it cannot intialize the container with the desired Docker image.
         """
@@ -59,13 +60,13 @@ image was not passed correctly as an argument.")
         j.submit()
         sleep_until_completed(j)
         j.remove()
-        
+
     def test_DockerImageArgWithMode(self):
         """
         The DockerImageArgWithMode function tests that the Docker image
         is passed correctly as an argument with the 'image=' prefix. It
         also test if mode is explicitly set to 'P1'.
-        
+
         This test will fail if Ganga cannot find the job in the registry
         or it cannot intialize the container with the desired Docker image
         and mode.
