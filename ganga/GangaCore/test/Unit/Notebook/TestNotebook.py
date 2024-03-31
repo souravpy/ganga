@@ -8,6 +8,8 @@ import string
 import uuid
 import os.path
 
+from GangaCore.Lib.Notebook import Notebook
+
 from GangaCore.GPIDev.Base.Proxy import addProxy, getProxyClass, getProxyAttr, isProxy, isType, stripProxy
 
 from GangaCore.Utility.logging import getLogger
