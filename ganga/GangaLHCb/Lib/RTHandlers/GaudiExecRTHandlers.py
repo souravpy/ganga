@@ -512,6 +512,7 @@ class GaudiExecDiracRTHandler(IRuntimeHandler):
             app (GaudiExec): This application is only expected to handle GaudiExec Applications here
             appmasterconfig (unknown): Output passed from the application master configuration call
         """
+
         # First check the remote options or inputfiles exist
         j = app.getJobObject()
         for file_ in j.inputfiles:
@@ -536,7 +537,9 @@ class GaudiExecDiracRTHandler(IRuntimeHandler):
 
         cred_req = app.getJobObject().backend.credential_requirements
         check_creds(cred_req)
+
         inputsandbox, outputsandbox = master_sandbox_prepare(app, appmasterconfig)
+
         # If we are getting the metadata we need to make sure the summary.xml is
         # added to the output sandbox if not there already.
         if app.getMetadata and 'summary.xml' not in outputsandbox:
