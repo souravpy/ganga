@@ -512,7 +512,6 @@ class GaudiExecDiracRTHandler(IRuntimeHandler):
             app (GaudiExec): This application is only expected to handle GaudiExec Applications here
             appmasterconfig (unknown): Output passed from the application master configuration call
         """
-        print('jeffs dong a mater prepare')
         # First check the remote options or inputfiles exist
         j = app.getJobObject()
         for file_ in j.inputfiles:
@@ -537,9 +536,7 @@ class GaudiExecDiracRTHandler(IRuntimeHandler):
 
         cred_req = app.getJobObject().backend.credential_requirements
         check_creds(cred_req)
-        print('master sandbox prepare')
         inputsandbox, outputsandbox = master_sandbox_prepare(app, appmasterconfig)
-        print('master sandbox output', outputsandbox)
         # If we are getting the metadata we need to make sure the summary.xml is
         # added to the output sandbox if not there already.
         if app.getMetadata and 'summary.xml' not in outputsandbox:
@@ -604,7 +601,6 @@ class GaudiExecDiracRTHandler(IRuntimeHandler):
             appmasterconfig (unknown): Output passed from the application master_configure call
             jobmasterconfig (tuple): Output from the master job prepare step
         """
-        print('jeffs doing a prepare')
         cred_req = app.getJobObject().backend.credential_requirements
         check_creds(cred_req)
         # NB this needs to be removed safely
@@ -642,7 +638,7 @@ class GaudiExecDiracRTHandler(IRuntimeHandler):
         app.uploadedInput = master_job.application.uploadedInput
         app.jobScriptArchive = master_job.application.jobScriptArchive
 
-        print("uploadedInput: %s" % app.uploadedInput)
+        logger.debug("uploadedInput: %s" % app.uploadedInput)
 
         rep_data = app.uploadedInput.getReplicas()
 
@@ -656,15 +652,11 @@ class GaudiExecDiracRTHandler(IRuntimeHandler):
             if isinstance(file_, DiracFile) and 'LFN:' + file_.lfn not in inputsandbox:
                 inputsandbox += ['LFN:' + file_.lfn]
 
-        print("Input Sand: %s" % inputsandbox)
+        logger.debug("Input Sand: %s" % inputsandbox)
 
-        print("input_data: %s" % input_data)
+        logger.debug("input_data: %s" % input_data)
 
         outputfiles = [this_file for this_file in job.outputfiles if isinstance(this_file, DiracFile)]
-
-        print('outputfiles list: ', outputfiles)
-
-        print('outputsandbox: ', outputsandbox)
 
         scriptToRun = getScriptName(app)
         # Already added to sandbox uploaded as LFN
