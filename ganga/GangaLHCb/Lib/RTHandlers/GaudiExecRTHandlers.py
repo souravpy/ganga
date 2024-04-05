@@ -588,7 +588,6 @@ class GaudiExecDiracRTHandler(IRuntimeHandler):
             app.uploadedInput.getReplicas()
         if len(app.uploadedInput.locations) >= 2:
             logger.debug("Uploaded input archive already at two locations, not replicating again")
-            return
         else:
             replicateJobFile(app.uploadedInput)
 
