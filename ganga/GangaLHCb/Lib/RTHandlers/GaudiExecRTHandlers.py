@@ -632,7 +632,8 @@ class GaudiExecDiracRTHandler(IRuntimeHandler):
                     inputsandbox += [os.path.join(app.getSharedPath(), file_.namePattern)]
             else:
                 logger.error(
-                    "Filetype: %s nor currently supported, please contact Ganga Devs if you require support for this with the DIRAC backend" %
+                    "Filetype: %s nor currently supported, "
+                    "please contact Ganga Devs if you require support for this with the DIRAC backend" %
                     getName(file_))
                 raise ApplicationConfigurationError("Unsupported filetype: %s with DIRAC backend" % getName(file_))
 
@@ -715,7 +716,7 @@ class GaudiExecDiracRTHandler(IRuntimeHandler):
         return StandardJobConfig(dirac_script, inputbox=[], outputbox=[])
 
 
-#\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\#
+# \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\#
 
 
 def gaudiRun_script_template():
@@ -777,7 +778,8 @@ if __name__ == '__main__':
     # Opening pleasantries
     print("Hello from GaudiExec")
     print("Arrived at workernode: %s" % getcwd())
-    print(r"#\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/#")
+    print(r"#\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/"
+            "\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/#")
     print("")
 
     print("CWD: %s" % getcwd())
@@ -794,7 +796,9 @@ if __name__ == '__main__':
 
     # Execute the actual command on the WN
     # NB os.system caused the entire stream to be captured before being streamed in some cases
-    pipe = subprocess.Popen('###COMMAND###'+' '+' '.join(sys.argv[1:]), shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, universal_newlines=True, errors="replace")
+    pipe = subprocess.Popen('###COMMAND###'+' '+' '.join(sys.argv[1:]), shell=True,
+                            stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+                            universal_newlines=True, errors="replace")
 
     # Flush the stdout/stderr as the process is running correctly
     flush_streams(pipe)
@@ -808,14 +812,15 @@ if __name__ == '__main__':
 
     # Final pleasantries
     print("")
-    print(r"#\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/#")
+    print(r"#\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/"
+            "\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/#")
     print("Goodbye from GaudiExec")
 
     sys.exit(rc)
 """
     return script_template
 
-#\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\#
+# \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\#
 
 
 from GangaCore.GPIDev.Adapters.ApplicationRuntimeHandlers import allHandlers
