@@ -195,7 +195,9 @@ class GaudiExec(IPrepareApp):
         'nMakeCores': SimpleItem(defvalue=1,
                                  doc='Number of cores to be provided via the "-j" option to the "make" command'\
                                      'when building the ganga-input-sandbox'),
-        'apptainerBuild' : SimpleItem(defvaule=False, doc="Run the build command in apptainer"),
+        'apptainerBuild' : SimpleItem(defvalue=False, doc="Run the build command in apptainer"),
+        'containerLocation' : SimpleItem(defvalue='/cvmfs/cernvm-prod.cern.ch/cvm4',
+                                         doc='Where is the container to use for the build located'),
         # Prepared job object
         'is_prepared': SimpleItem(defvalue=None, strict_sequence=0, visitable=1, copyable=1, hidden=0,
                                   typelist=[None, ShareDir], protected=0, comparable=1,
@@ -565,8 +567,15 @@ class GaudiExec(IPrepareApp):
                 rc, stdout, stderr = _exec_cmd(cmd_file.name, self.directory)
         else:
             if self.apptainerBuild or 'slc6' in self.platform:
-                cmd_to_run = 'apptainer exec --env "PATH=$PATH" --bind $PWD --bind /cvmfs:/cvmfs:ro /cvmfs/cernvm-prod.cern.ch/cvm4 ' + cmd_file.name
-                rc, stdout, stderr = _exec_cmd(cmd_to_run, self.directory)
+                try:
+                    logger.info('Building inside apptainer: %s' % self.containerLocation)
+                    cmd_to_run = 'apptainer exec --env "PATH=$PATH" --bind $PWD --bind /cvmfs:/cvmfs:ro '\
+                                 + self.containerLocation + ' ' + cmd_file.name
+                    rc, stdout, stderr = _exec_cmd(cmd_to_run, self.directory)
+                except:
+                    logger.error('Failed to build the application inside a container. '
+                                 'Perhaps the specified container location is not accessible.')
+                    raise GangaException('Failed to execute make command')
             else:
                 rc, stdout, stderr = _exec_cmd(cmd_file.name, self.directory)
         if rc != 0:
