@@ -79,7 +79,7 @@ sys.path.insert(0, ###GANGADIR###)
 sys.path.insert(0,os.path.join(workdir,PYTHON_DIR))
 
 runenv = os.environ.copy()
-for key,value in environment.iteritems():
+for key,value in environment.items():
     runenv[key] = value
 
 sysout2 = os.dup(sys.stdout.fileno())
