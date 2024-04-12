@@ -536,6 +536,8 @@ class GaudiExec(IPrepareApp):
 
         cmd_file.write("#!/bin/bash")
         cmd_file.write("\n")
+#        if self.getJobObject().virtualization:
+#            cmd_file.write('apptainer exec --env "PATH=$PATH" --bind $PWD --bind /cvmfs:/cvmfs:ro /cvmfs/cernvm-prod.cern.ch/cvm4 ')
         cmd_file.write(self.getEnvScript(isLbEnv))
         cmd_file.write(cmd)
         cmd_file.flush()
@@ -564,7 +566,9 @@ class GaudiExec(IPrepareApp):
             if cmd != 'make':
                 rc, stdout, stderr = _exec_cmd(cmd_file.name, self.directory)
         else:
-            rc, stdout, stderr = _exec_cmd(cmd_file.name, self.directory)
+            cmd_to_run = 'apptainer exec --env "PATH=$PATH" --bind $PWD --bind /cvmfs:/cvmfs:ro /cvmfs/cernvm-prod.cern.ch/cvm4 ' + cmd_file.name
+            rc, stdout, stderr = _exec_cmd(cmd_to_run, self.directory)
+#            rc, stdout, stderr = _exec_cmd(cmd_file.name, self.directory)
         if rc != 0:
             logger.error("Failed to execute command: %s" % cmd_file.name)
             logger.error("Tried to execute command in: %s" % self.directory)
