@@ -536,8 +536,6 @@ class GaudiExec(IPrepareApp):
 
         cmd_file.write("#!/bin/bash")
         cmd_file.write("\n")
-#        if self.getJobObject().virtualization:
-#            cmd_file.write('apptainer exec --env "PATH=$PATH" --bind $PWD --bind /cvmfs:/cvmfs:ro /cvmfs/cernvm-prod.cern.ch/cvm4 ')
         cmd_file.write(self.getEnvScript(isLbEnv))
         cmd_file.write(cmd)
         cmd_file.flush()
