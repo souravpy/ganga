@@ -195,7 +195,7 @@ class GaudiExec(IPrepareApp):
         'nMakeCores': SimpleItem(defvalue=1,
                                  doc='Number of cores to be provided via the "-j" option to the "make" command'\
                                      'when building the ganga-input-sandbox'),
-
+        'apptainerBuild' : SimpleItem(defvaule=False, doc="Run the build command in apptainer"),
         # Prepared job object
         'is_prepared': SimpleItem(defvalue=None, strict_sequence=0, visitable=1, copyable=1, hidden=0,
                                   typelist=[None, ShareDir], protected=0, comparable=1,
@@ -564,9 +564,11 @@ class GaudiExec(IPrepareApp):
             if cmd != 'make':
                 rc, stdout, stderr = _exec_cmd(cmd_file.name, self.directory)
         else:
-            cmd_to_run = 'apptainer exec --env "PATH=$PATH" --bind $PWD --bind /cvmfs:/cvmfs:ro /cvmfs/cernvm-prod.cern.ch/cvm4 ' + cmd_file.name
-            rc, stdout, stderr = _exec_cmd(cmd_to_run, self.directory)
-#            rc, stdout, stderr = _exec_cmd(cmd_file.name, self.directory)
+            if self.apptainerBuild or 'slc6' in self.platform:
+                cmd_to_run = 'apptainer exec --env "PATH=$PATH" --bind $PWD --bind /cvmfs:/cvmfs:ro /cvmfs/cernvm-prod.cern.ch/cvm4 ' + cmd_file.name
+                rc, stdout, stderr = _exec_cmd(cmd_to_run, self.directory)
+            else:
+                rc, stdout, stderr = _exec_cmd(cmd_file.name, self.directory)
         if rc != 0:
             logger.error("Failed to execute command: %s" % cmd_file.name)
             logger.error("Tried to execute command in: %s" % self.directory)
