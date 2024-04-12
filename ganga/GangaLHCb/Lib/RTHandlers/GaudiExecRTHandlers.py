@@ -794,9 +794,6 @@ if __name__ == '__main__':
 
     print("Executing: %s" % '###COMMAND###'+' '+' '.join(sys.argv[1:]))
 
-    ###VIRTUALIZATION###
-
-
     # Execute the actual command on the WN
     # NB os.system caused the entire stream to be captured before being streamed in some cases
     pipe = subprocess.Popen('###COMMAND###'+' '+' '.join(sys.argv[1:]), shell=True,
